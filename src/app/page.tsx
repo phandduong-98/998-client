@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import QRCodeScannerWrapper from "@/components/QRCodeScannerWrapper";
+import GeolocationDisplay from "@/components/GeolocationDisplay";
 import { useState } from "react";
 
 export default function Home() {
@@ -25,6 +26,8 @@ export default function Home() {
           onScanSuccess={handleScanSuccess}
           onScanFailure={handleScanFailure}
         />
+
+        <GeolocationDisplay />
 
         {scannedData && (
           <div className="mt-4 p-4 border rounded bg-green-100 text-green-800">
