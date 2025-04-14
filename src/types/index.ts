@@ -71,7 +71,8 @@ export interface AuthState {
   isLoading: boolean;
 }
 
-export interface GeolocationPosition {
+// Renamed from GeolocationPosition to avoid conflict with built-in type
+export interface GeolocationCoords {
   latitude: number;
   longitude: number;
   accuracy: number;

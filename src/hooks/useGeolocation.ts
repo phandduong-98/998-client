@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { GeolocationPosition } from '@/types';
+import { GeolocationCoords } from '@/types';
 
 interface UseGeolocationReturn {
-  position: GeolocationPosition | null;
+  position: GeolocationCoords | null;
   error: string | null;
   loading: boolean;
 }
 
 export const useGeolocation = (): UseGeolocationReturn => {
-  const [position, setPosition] = useState<GeolocationPosition | null>(null);
+  const [position, setPosition] = useState<GeolocationCoords | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -19,11 +19,11 @@ export const useGeolocation = (): UseGeolocationReturn => {
       return;
     }
 
-    const successHandler = (position: GeolocationPosition) => {
+    const successHandler = (pos: GeolocationPosition) => {
       setPosition({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy,
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        accuracy: pos.coords.accuracy,
       });
       setLoading(false);
       setError(null);
@@ -36,7 +36,7 @@ export const useGeolocation = (): UseGeolocationReturn => {
     };
 
     const watchId = navigator.geolocation.watchPosition(
-      successHandler as unknown as PositionCallback,
+      successHandler as PositionCallback,
       errorHandler,
       {
         enableHighAccuracy: true,

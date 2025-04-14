@@ -28,10 +28,16 @@ export default function RegisterPage() {
     try {
       await register.mutateAsync({ name, email, password, role });
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again."
-      );
+    } catch (err: unknown) {
+      let errorMessage = "Registration failed. Please try again.";
+      if (typeof err === 'object' && err !== null && 'response' in err) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response = (err as any).response; // Use 'any' briefly for type casting
+        if (response?.data?.message) {
+          errorMessage = response.data.message;
+        }
+      }
+      setError(errorMessage);
     }
   };
 

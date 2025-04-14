@@ -6,14 +6,13 @@ import { useState } from "react";
 
 export default function Home() {
   const [scannedData, setScannedData] = useState<string | null>(null);
-  const exampleQrValue = "https://example.com/lecture/123";
 
   const handleScanSuccess = (data: string) => {
     console.log("Scan successful:", data);
     setScannedData(data);
   };
 
-  const handleScanFailure = (error: string) => {
+  const handleScanFailure = () => {
     // The error is already logged and displayed by the scanner component
     // console.error("Scan failed:", error);
   };

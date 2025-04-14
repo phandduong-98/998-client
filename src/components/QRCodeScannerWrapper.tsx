@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
+import { Html5Qrcode } from "html5-qrcode";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -33,7 +32,7 @@ const QRCodeScannerWrapper = ({
           .catch((err) => console.error("Error stopping scanner:", err));
       }
     };
-  }, []);
+  }, [isScanning]);
 
   const startScanner = () => {
     if (!scannerRef.current) return;

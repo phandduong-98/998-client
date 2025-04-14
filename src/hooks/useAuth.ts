@@ -1,4 +1,4 @@
-import { useQuery, useMutation, QueryKey } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import apiClient from '@/lib/api/apiClient';
 import { User } from '@/types';
 import { queryClient } from '@/lib/queryClient';
@@ -11,9 +11,21 @@ export const useCurrentUser = () => {
       try {
         const response = await apiClient.get('/auth/me');
         return response.data;
-      } catch (error) {
-        // If 401 or other auth error, return null instead of throwing
-        if (error.response?.status === 401) {
+      } catch (error: unknown) {
+        // Check if error is an object with a response property
+        if (
+          typeof error === 'object' && 
+          error !== null && 
+          'response' in error && 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          typeof (error as any).response === 'object' && 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (error as any).response !== null &&
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          'status' in (error as any).response &&
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (error as any).response.status === 401
+        ) {
           return null;
         }
         throw error;

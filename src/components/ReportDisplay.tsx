@@ -1,8 +1,59 @@
 import React from 'react';
 
+// Define interfaces for the data structure
+interface OverallStats {
+  totalStudents?: number;
+  totalCourses?: number;
+  totalLectures?: number;
+  averageAttendanceRate?: number;
+  attendanceRate?: number; // Added for student report type
+}
+
+interface StudentStat {
+  name: string;
+  present: number;
+  late: number;
+  absent: number;
+  attendanceRate: number;
+}
+
+interface LectureStat {
+  title: string;
+  date: string; // Assuming date is a string, adjust if it's a Date object
+  present: number;
+  late: number;
+  absent: number;
+  attendanceRate: number;
+}
+
+interface CourseInfo {
+  name: string;
+  code: string;
+}
+
+interface CourseAggregateStat {
+  totalLectures: number;
+  present: number;
+  late: number;
+  absent: number;
+  attendanceRate: number;
+}
+
+interface CourseStat {
+  course: CourseInfo;
+  stats: CourseAggregateStat;
+}
+
+interface ReportData {
+  overallStats?: OverallStats;
+  studentStats?: StudentStat[];
+  lectureStats?: LectureStat[];
+  courseStats?: CourseStat[];
+}
+
 interface ReportDisplayProps {
   title: string;
-  data: any;
+  data: ReportData | null | undefined; // Use the defined interface
   type: 'course' | 'student';
 }
 
@@ -60,7 +111,7 @@ const ReportDisplay: React.FC<ReportDisplayProps> = ({ title, data, type }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.studentStats?.map((student: any, index: number) => (
+                  {data.studentStats?.map((student: StudentStat, index: number) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
                       <td className="py-2 px-4">{student.name}</td>
                       <td className="py-2 px-4 text-center">{student.present}</td>
@@ -90,7 +141,7 @@ const ReportDisplay: React.FC<ReportDisplayProps> = ({ title, data, type }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.lectureStats?.map((lecture: any, index: number) => (
+                  {data.lectureStats?.map((lecture: LectureStat, index: number) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
                       <td className="py-2 px-4">{lecture.title}</td>
                       <td className="py-2 px-4 text-center">
@@ -125,7 +176,7 @@ const ReportDisplay: React.FC<ReportDisplayProps> = ({ title, data, type }) => {
                 </tr>
               </thead>
               <tbody>
-                {data.courseStats?.map((course: any, index: number) => (
+                {data.courseStats?.map((course: CourseStat, index: number) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
                     <td className="py-2 px-4">{course.course.name} ({course.course.code})</td>
                     <td className="py-2 px-4 text-center">{course.stats.totalLectures}</td>
