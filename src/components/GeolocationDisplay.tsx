@@ -45,7 +45,8 @@ export default function GeolocationDisplay() {
     // Optional: Watch position (updates location as the user moves)
     const watchId = navigator.geolocation.watchPosition(
       handleSuccess,
-      handleError
+      handleError,
+      { enableHighAccuracy: true }
     );
     return () => navigator.geolocation.clearWatch(watchId); // Cleanup watcher on unmount
   }, []);
