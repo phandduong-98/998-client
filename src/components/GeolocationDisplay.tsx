@@ -19,7 +19,10 @@ export default function GeolocationDisplay() {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError({ code: 0, message: "Geolocation is not supported by your browser" });
+      setError({
+        code: 0,
+        message: "Geolocation is not supported by your browser",
+      });
       setLoading(false);
       return;
     }
@@ -37,12 +40,14 @@ export default function GeolocationDisplay() {
       setLoading(false);
     };
 
-    navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+    // navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
 
     // Optional: Watch position (updates location as the user moves)
-    // const watchId = navigator.geolocation.watchPosition(handleSuccess, handleError);
-    // return () => navigator.geolocation.clearWatch(watchId); // Cleanup watcher on unmount
-
+    const watchId = navigator.geolocation.watchPosition(
+      handleSuccess,
+      handleError
+    );
+    return () => navigator.geolocation.clearWatch(watchId); // Cleanup watcher on unmount
   }, []);
 
   return (
@@ -61,9 +66,7 @@ export default function GeolocationDisplay() {
           <p>Longitude: {location.longitude}</p>
         </div>
       )}
-      {!location && !loading && !error && (
-         <p>Could not retrieve location.</p>
-      )}
+      {!location && !loading && !error && <p>Could not retrieve location.</p>}
     </div>
   );
-} 
+}
