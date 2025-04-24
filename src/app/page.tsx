@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import QRCodeScannerWrapper from "@/components/QRCodeScannerWrapper";
-import GeolocationDisplay from "@/components/GeolocationDisplay";
+import QRCodeScannerWrapper from "@/components/qr-code-scanner-wrapper";
+import GeolocationDisplay from "@/components/geolocation-display";
 import { useState } from "react";
 
 export default function Home() {

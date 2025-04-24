@@ -4,6 +4,10 @@ import { ReactQueryProvider } from "@/lib/queryClient";
 import { useCurrentUser } from "@/hooks/useAuth";
 import useAuthStore from "@/store/authStore";
 import "./globals.css"; // Assuming you have global styles
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+
+const inter = Inter({ subsets: ["latin"] });
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -11,15 +15,22 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Add necessary head elements here, like meta tags, title, etc. */}
         <title>QR Attendance System</title>
       </head>
-      <body>
-        <ReactQueryProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ReactQueryProvider>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
